@@ -20,28 +20,32 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class MealServlet extends HttpServlet {
     private static final Logger log = getLogger(MealServlet.class);
+    List<MealTo> mealTo;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        List<Meal> meals = Arrays.asList(
+                new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
+                new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000),
+                new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500),
+                new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 0, 0), "Еда на граничное значение", 100),
+                new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000),
+                new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500),
+                new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410)
+        );
+        mealTo = MealsUtil.filteredByStreams(meals,
+                LocalTime.of(0, 0), LocalTime.of(23, 59), 2000);
+    }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getAttribute("listMeals") == null){
-            List<Meal> meals = Arrays.asList(
-                    new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
-                    new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000),
-                    new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500),
-                    new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 0, 0), "Еда на граничное значение", 100),
-                    new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000),
-                    new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500),
-                    new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410)
-            );
-            List<MealTo> mealTo = MealsUtil.filteredByStreams(meals,
-                    LocalTime.of(0, 0), LocalTime.of(23, 59), 2000);
-            req.setAttribute("listMeals", mealTo);
-        }else {
-            List<MealTo> mealTo = (List<MealTo>) req.getAttribute("listMeals");
-            req.setAttribute("listMeals", mealTo);
-        }
+
+        req.setAttribute("listMeals", mealTo);
+
         log.debug("redirect to meal");
-        getServletContext().getRequestDispatcher("meals.jsp").forward(req,resp);
+        getServletContext().getRequestDispatcher("/meals.jsp").forward(req, resp);
 
     }
 }
