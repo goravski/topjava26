@@ -5,19 +5,17 @@
     <title>Meals</title>
 </head>
 <body>
-<h3><a href="index.html">Home</a></h3>
+<h3><a href="/topjava">Home</a></h3>
 <hr>
-<table border="1" , aria-colcount="5">
+<table border=1>
     <tr>
         <th>Date</th>
         <th>Description</th>
         <th>Calories</th>
-        <th></th>
-        <th></th>
     </tr>
 
     <c:forEach var="meal" items="${requestScope.listMeals}">
-        <tr>
+        <tr style="color: ${meal.excess == true ? 'red' : 'green'}" >
             <td>${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}</td>
             <td>${meal.description}</td>
             <td>${meal.calories}</td>
