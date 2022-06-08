@@ -19,7 +19,12 @@ public class MealsDaoImpl implements InterfaceDao {
     }
 
     @Override
-    public List get() {
+    public List getAll() {
+        return null;
+    }
+
+    @Override
+    public List getbyId(int id) {
         return null;
     }
 }
