@@ -10,5 +10,6 @@ public interface InterfaceDao<E> {
     void delete(E entity);
 
     List<E> getAll();
-    List<E> getbyId( int id);
+
+    List<E> getbyId(int id);
 }
