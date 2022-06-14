@@ -6,6 +6,7 @@ import java.util.Collection;
 
 // TODO add userId
 public interface MealRepository {
+    public static final int ID_USER = 1;
     // null if updated meal does not belong to userId
     Meal save(Meal meal);
 
