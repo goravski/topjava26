@@ -38,7 +38,7 @@ public class InMemoryMealRepository implements MealRepository {
     @Override
     public boolean delete(int id) {
         if (repository.get(id).getIdUser() == ID_USER) {
-            log.info("meal deleted");
+            log.info("meal deleted id = "+id);
             return repository.remove(id) != null;
         }
         log.info("meal not deleted cause it's empty or don't own user id = " + ID_USER);
@@ -58,7 +58,7 @@ public class InMemoryMealRepository implements MealRepository {
         return repository.values()
                 .stream()
                 .filter(meal -> meal.getIdUser() == ID_USER)
-                .sorted(Comparator.comparing(Meal::getDateTime))
+                .sorted(Comparator.comparing(Meal::getDateTime).reversed())
                 .collect(Collectors.toList());
     }
 }
