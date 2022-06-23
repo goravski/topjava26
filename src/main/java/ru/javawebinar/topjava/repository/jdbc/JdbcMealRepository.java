@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -34,7 +35,11 @@ public class JdbcMealRepository implements MealRepository {
 
     @Override
     public Meal save(Meal meal, int userId) {
-        return null;
+        int result = jdbcTemplate.update(
+                "UPDATE meals SET datetime = ?, description = ?, calories = ? WHERE  id = ?",
+                meal.getDateTime(), meal.getDescription(), meal.getCalories(), meal.getId());
+
+        return meal;
     }
 
     @Override
@@ -44,7 +49,8 @@ public class JdbcMealRepository implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
-        return null;
+        List<Meal> meal = jdbcTemplate.query("SELECT * FROM meals WHERE id=?", ROW_MAPPER, id);
+        return DataAccessUtils.singleResult(meal);
     }
 
     @Override
