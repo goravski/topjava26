@@ -36,7 +36,7 @@ public class JdbcMealRepository implements MealRepository {
     @Override
     public Meal save(Meal meal, int userId) {
         int result = jdbcTemplate.update(
-                "UPDATE meals SET datetime = ?, description = ?, calories = ? WHERE  id = ?",
+                "UPDATE meals SET date_time = ?, description = ?, calories = ? WHERE  id = ?",
                 meal.getDateTime(), meal.getDescription(), meal.getCalories(), meal.getId());
 
         return meal;
