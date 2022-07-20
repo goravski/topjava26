@@ -75,9 +75,7 @@ public class JspMealController {
             case "filter" -> {
                 LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
                 LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
-                LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
-                LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
-                model.addAttribute("meals", mealService.getBetweenInclusive(startDate, endDate, userId));
+                model.addAttribute(MealsUtil.getTos(mealService.getAll(userId), SecurityUtil.authUserCaloriesPerDay()));
                 return "meals";
             }
             default -> {
