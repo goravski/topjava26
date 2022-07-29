@@ -10,14 +10,14 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealTo;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/rest/profile/meals")
 public class MealRestController extends AbstractMealController {
+    public static final String REST_URL = "/rest/profile/meals";
+
     @Override
     @GetMapping("/{id}")
     public Meal get(@PathVariable int id) {
